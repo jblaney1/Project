@@ -46,6 +46,33 @@ int size(vector<int> vec1)
 	return size;
 }
 
+int size(string text)
+{
+
+	int size = 0;
+	string::iterator it1, it2;
+	it2 = text.end();
+	it1 = text.begin();
+	if (it1 != it2)
+	{
+		it2 = text.begin();
+		it2++;
+		it1 = text.begin();
+		while (it1 != it2)
+		{
+			if (it2 == text.end())
+			{
+				size++;
+				break;
+			}
+			size++;
+			it1++;
+			it2++;
+		}
+	}
+	return size;
+}
+
 // QuickSort
 
 double Partition(vector<int>& vec1, int low, int high)
