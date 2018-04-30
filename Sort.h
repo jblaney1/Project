@@ -1,11 +1,16 @@
 #include <vector>
 #include <iterator>
 #include <iostream>
+#include <string>
+
+#include "LinkedList.h"
+
 using std::cout;
 using std::endl;
 
 using std::vector;
 using std::iterator;
+using std::string;
 
 
 void Swap(int* A, int* B)
@@ -123,10 +128,10 @@ bool BinarySearch(vector<int> vec1, int data)
 		{
 			vector<int> vec3;
 
-				for (int i = (length / 2); i < length - 1; i++)
-				{
-					vec3.push_back(vec1[i]);
-				}
+			for (int i = (length / 2); i < length - 1; i++)
+			{
+				vec3.push_back(vec1[i]);
+			}
 
 			return BinarySearch(vec3, data);
 		}
@@ -158,15 +163,15 @@ bool BinarySearch(vector<int> vec1, int data)
 		{
 			vector<int> vec3;
 
-				for (int i = high; i < length; i++)
-				{
-					vec3.push_back(vec1[i]);
-				}
+			for (int i = high; i < length; i++)
+			{
+				vec3.push_back(vec1[i]);
+			}
 
-				return BinarySearch(vec3, data);
+			return BinarySearch(vec3, data);
 		}
 	}
-	
+
 }
 
 // Merge Sort
@@ -345,7 +350,7 @@ vector<int> Merge(SplitVec& vec)
 						i++;
 						break;
 					}
-						k++;
+					k++;
 				}
 				if (L != len3)
 				{
@@ -483,42 +488,44 @@ vector<int> MergeSort(vector<int>& vec1)
 
 struct chainBucket {
 	bool collision;//whether or not there was a collision at this field
-	int Hash[80];
-	string key[80];
+	List* bucketList;
 };
 
-struct chainingTable{
+class HashTable {
+private:
 
+	chainBucket Table[79];
+
+public:
+
+	unsigned int collisions;
+
+
+	void addToTable(string text);
 };
 
-int Hash(string word)
+unsigned int Hash(string word)
 {
-
+	unsigned int hash = ((2*word[1]) + (4*word[2]) + (3*word[3]));
+	return hash;
 }
 
-void addToChaining(unsigned int inputHash, std::string text)
+void HashTable::addToTable(string text)
 {
-	chainBucket bucket;
-	bucket.collision = false;
-	bool done1 = true;
+	unsigned int hash = Hash(text),  key = Hash(text) % 79;
 
-	bucket.bucketList->insertAsFirst(text);
-
-	if (chainingTable.empty() == true)
+	if (Table[key].bucketList->empty())
 	{
-		chainingTable.insert({ inputHash, bucket });
+		chainBucket bucket;
+		bucket.collision = false;
+		bucket.bucketList = new List;
+		bucket.bucketList->insertAsFirst(Hash(text));
+		Table[key] = bucket;
 	}
 	else
 	{
-		done1 = chainingTable.insert({ inputHash, bucket }).second;
-	}
-
-	if (!done1)
-	{
-		mapit1 = chainingTable.insert({ inputHash,bucket }).first;
-		mapit1->second.collision = true;
-		mapit1->second.bucketList->insertAsLast(text);
-		chainedCollisions = chainedCollisions + 1;
-		addToChaining(inputHash + 1, text);
+		Table[key].collision == true;
+		Table[key].bucketList->insertAsLast(hash);
+		collisions++;
 	}
 }
