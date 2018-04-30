@@ -1,5 +1,8 @@
 #include <vector>
 #include <iterator>
+#include <iostream>
+using std::cout;
+using std::endl;
 
 using std::vector;
 using std::iterator;
@@ -174,44 +177,245 @@ struct SplitVec {
 
 vector<int> Merge(SplitVec& vec)
 {
-	vector<int> vec3;
-	int j = 0, i = 0, len1 = size(vec.vec1), len2 = size(vec.vec2);
+	vector<int> vec3 = {};
+	vector<int>::iterator k;
+
+	int j = 0, i = 0, L, len1 = size(vec.vec1), len2 = size(vec.vec2), len3 = size(vec3);
+
 	while (i < (len1) || j < (len2))
 	{
+		k = vec3.begin();
+		L = 0;
+
 		if ((len1) > i && len2 > j)
 		{
 			if (vec.vec1[i] > vec.vec2[j])
 			{
-				vec3.push_back(vec.vec2[j]);
-				j++;
+				if (len3 != 0)
+				{
+					if (*k > vec.vec2[j])
+					{
+						vec3.emplace(k, vec.vec2[j]);
+						j++;
+						len3++;
+					}
+					else
+					{
+						while (*k < vec.vec2[j])
+						{
+							L++;
+							if (L == len3)
+							{
+								vec3.push_back(vec.vec2[j]);
+								len3++;
+								j++;
+								L++;
+								break;
+							}
+							k++;
+						}
+						if (L != len3)
+						{
+							vec3.emplace(k, vec.vec2[j]);
+							j++;
+							len3++;
+						}
+					}
+				}
+				else if (len3 == 0)
+				{
+					vec3.emplace(k, vec.vec2[j]);
+					len3++;
+					j++;
+				}
 			}
 			else if (vec.vec1[i] < vec.vec2[j])
 			{
-				vec3.push_back(vec.vec1[i]);
-				i++;
+				if (len3 != 0)
+				{
+					if (*k > vec.vec1[i])
+					{
+						vec3.emplace(k, vec.vec1[i]);
+						i++;
+						len3++;
+					}
+					else
+					{
+						while (*k < vec.vec1[i])
+						{
+							L++;
+							if (L == len3)
+							{
+								vec3.push_back(vec.vec1[i]);
+								len3++;
+								i++;
+								L++;
+								break;
+							}
+							k++;
+						}
+						if (L != len3)
+						{
+							vec3.emplace(k, vec.vec1[i]);
+							i++;
+							len3++;
+						}
+					}
+				}
+				else if (len3 == 0)
+				{
+					vec3.emplace(k, vec.vec2[i]);
+					len3++;
+					i++;
+				}
 			}
 			else
 			{
-				vec3.push_back(vec.vec1[i]);
-				vec3.push_back(vec.vec2[j]);
-				i++;
-				j++;
+				if (len3 != 0)
+				{
+					if (*k > vec.vec1[i])
+					{
+						vec3.emplace(k, vec.vec1[i]);
+						k++;
+						vec3.emplace(k, vec.vec2[j]);
+						i++;
+						j++;
+						len3++;
+					}
+					else
+					{
+						while (*k < vec.vec1[i])
+						{
+							L++;
+							if (L == len3)
+							{
+								vec3.push_back(vec.vec2[j]);
+								vec3.push_back(vec.vec1[i]);
+								len3 + 2;
+								i++;
+								j++;
+								L + 2;
+								break;
+							}
+
+							k++;
+						}
+						if (L != len3)
+						{
+							vec3.emplace(k, vec.vec1[i]);
+							k++;
+							vec3.emplace(k, vec.vec2[j]);
+							i++;
+							j++;
+							len3 + 2;
+
+						}
+					}
+				}
+				else if (len3 == 0)
+				{
+					vec3.emplace(k, vec.vec1[i]);
+					len3++;
+					k++;
+					vec3.emplace(k, vec.vec2[j]);
+					len3++;
+					i++;
+					j++;
+				}
 			}
 		}
 		else if (i < j)
 		{
-			vec3.push_back(vec.vec1[i]);
-			i++;
+			if (*k > vec.vec1[i])
+			{
+				vec3.emplace(k, vec.vec1[i]);
+				i++;
+				len3++;
+			}
+			else
+			{
+				while (*k < vec.vec1[i])
+				{
+					L++;
+					if (L == len3)
+					{
+						vec3.push_back(vec.vec1[i]);
+						len3++;
+						L++;
+						i++;
+						break;
+					}
+						k++;
+				}
+				if (L != len3)
+				{
+					vec3.emplace(k, vec.vec1[i]);
+					i++;
+					len3++;
+				}
+			}
 		}
 		else if (j < i)
 		{
-			vec3.push_back(vec.vec2[j]);
-			j++;
+			if (*k > vec.vec2[j])
+			{
+				vec3.emplace(k, vec.vec2[j]);
+				j++;
+				len3++;
+			}
+			else
+			{
+				while (*k < vec.vec2[j])
+				{
+					L++;
+					if (L == len3)
+					{
+						vec3.push_back(vec.vec2[j]);
+						len3++;
+						j++;
+						L++;
+						break;
+					}
+					k++;
+				}
+				if (L != len3)
+				{
+					vec3.emplace(k, vec.vec2[j]);
+					j++;
+					len3++;
+				}
+			}
 		}
-		else if (len1 > len2 && !((len1) > i && len2 > j))
+		else if (len1 < len2 && !((len1) > i && len2 > j))
 		{
-			vec3.push_back(vec.vec1[i]);
-			i++;
+			if (*k > vec.vec2[j])
+			{
+				vec3.emplace(k, vec.vec2[j]);
+				j++;
+				len3++;
+			}
+			else
+			{
+				while (*k < vec.vec2[j])
+				{
+					L++;
+					if (L == len3)
+					{
+						vec3.push_back(vec.vec2[j]);
+						len3++;
+						j++;
+						L++;
+						break;
+					}
+					k++;
+				}
+				if (L != len3)
+				{
+					vec3.emplace(k, vec.vec2[j]);
+					j++;
+					len3++;
+				}
+			}
 		}
 	}
 	return vec3;
@@ -231,14 +435,14 @@ vector<int> MergeSort(vector<int>& vec1)
 				vec.vec1.push_back(vec1[i]);
 			}
 
-			for (int i = (length / 2); i < length - 1; i++)
+			for (int i = (length / 2); i < length; i++)
 			{
 				vec.vec2.push_back(vec1[i]);
 			}
 		}
 		else
 		{
-			int low = length / 2, high = (length / 2) + 1;
+			int low = (length / 2), high = (length / 2);
 
 			for (int i = 0; i < low; i++)
 			{
@@ -260,16 +464,61 @@ vector<int> MergeSort(vector<int>& vec1)
 		{
 			if (length == 3)
 			{
-				vec.vec1.push_back(vec1[i]);
-				vec.vec1.push_back(vec1[i + 1]);
+				vec.vec2.push_back(vec1[i]);
+				vec.vec2.push_back(vec1[i + 1]);
+				j = length - 1;
 			}
 			else
 			{
-				vec.vec1.push_back(vec1[i]);
+				vec.vec2.push_back(vec1[i]);
 			}
-			vec.vec2.push_back(vec1[j]);
+			vec.vec1.push_back(vec1[j]);
 			j++;
 		}
 	}
 	return vec1 = Merge(vec);
+}
+
+// Hash()
+
+struct chainBucket {
+	bool collision;//whether or not there was a collision at this field
+	int Hash[80];
+	string key[80];
+};
+
+struct chainingTable{
+
+};
+
+int Hash(string word)
+{
+
+}
+
+void addToChaining(unsigned int inputHash, std::string text)
+{
+	chainBucket bucket;
+	bucket.collision = false;
+	bool done1 = true;
+
+	bucket.bucketList->insertAsFirst(text);
+
+	if (chainingTable.empty() == true)
+	{
+		chainingTable.insert({ inputHash, bucket });
+	}
+	else
+	{
+		done1 = chainingTable.insert({ inputHash, bucket }).second;
+	}
+
+	if (!done1)
+	{
+		mapit1 = chainingTable.insert({ inputHash,bucket }).first;
+		mapit1->second.collision = true;
+		mapit1->second.bucketList->insertAsLast(text);
+		chainedCollisions = chainedCollisions + 1;
+		addToChaining(inputHash + 1, text);
+	}
 }
