@@ -520,20 +520,21 @@ struct chainBucket {
 
 class HashTable {
 private:
-
 	chainBucket Table[79];
-
 public:
-
 	unsigned int collisions;
-
-
 	void addToTable(string text);
 };
 
 unsigned int Hash(string word)
 {
-	unsigned int hash = ((2*word[1]) + (4*word[2]) + (3*word[3]));
+	int length = size(word);
+	if (length < 6)
+	{
+		cout << "The min string length is 6, please enter a longer string" << endl;
+		return 0;
+	}
+	unsigned int hash = ((word[0]) + (3 * word[1]) + (5 * word[2]) + (7 * word[3]) + (11 * word[4]) + (13 * word[5]));
 	return hash;
 }
 
@@ -541,6 +542,10 @@ void HashTable::addToTable(string text)
 {
 	unsigned int hash = Hash(text),  key = Hash(text) % 79;
 
+	if(hash == 0)
+	{
+		   return;
+	}
 	if (Table[key].bucketList->empty())
 	{
 		chainBucket bucket;
