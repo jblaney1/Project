@@ -207,16 +207,23 @@ string List::removeFirst()
 
 void List::print() const
 {
+	Node * ptr = first_;
+
 	cout << "[ ";
 	if (!empty())
 	{
 		// The first entry is printed separately because no comma
 		// is needed.
-		cout << first_->entry_;
-		Node * ptr = first_->next_;
 		while (ptr != NULL)
 		{
-			cout << " | " << ptr->entry_;
+			if (ptr == first_)
+			{
+				cout << ptr->entry_;
+			}
+			else
+			{
+				cout << " | " << ptr->entry_;
+			}
 			ptr = ptr->next_;
 		}
 	}

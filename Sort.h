@@ -10,7 +10,7 @@ using std::vector;
 using std::iterator;
 using std::string;
 
-
+// A function to swap two elements
 void Swap(int* A, int* B)
 {
 	int swap = *A;
@@ -18,6 +18,7 @@ void Swap(int* A, int* B)
 	*B = swap;
 }
 
+// A function to find the size of a vector
 int size(vector<int> vec1)
 {
 	int size = 0;
@@ -44,6 +45,7 @@ int size(vector<int> vec1)
 	return size;
 }
 
+// A function to find the size of a string
 int size(string text)
 {
 
@@ -72,7 +74,7 @@ int size(string text)
 }
 
 // QuickSort
-
+// The function that actually does the sorting
 int Partition(vector<int>& vec1, int low, int high)
 {
 	int pivot = vec1[high], i = (low - 1);
@@ -91,6 +93,7 @@ int Partition(vector<int>& vec1, int low, int high)
 	return (i + 1);
 }
 
+// The function that makes the sort recursive
 void Sort(vector<int>& vec1, int low, int high)
 {
 	if (low < high)
@@ -101,6 +104,7 @@ void Sort(vector<int>& vec1, int low, int high)
 	}
 }
 
+// The function that the user actually calls
 vector<int> QuickSort(vector<int>& vec1)
 {
 	Sort(vec1, 0, size(vec1) - 1);
@@ -200,13 +204,14 @@ bool BinarySearch(vector<int> vec1, int data)
 }
 
 // Merge Sort
+// In hind sight MergeSort would have been much easier with an array
 
+// A structure to hold both sides of the vector after being split
 struct SplitVec {
 	vector<int> vec1, vec2;
 };
 
-// In hind sight MergeSort would have been much easier with an array
-
+// The function that sorts and merges two vectors into one vector
 vector<int> Merge(SplitVec& vec)
 {
 	vector<int> vec3 = {};
@@ -456,6 +461,8 @@ vector<int> Merge(SplitVec& vec)
 	return vec3;
 }
 
+// The function that the user calls
+// It takes a vector and splits it into smaller vectors until the length is 2 or so
 vector<int> MergeSort(vector<int>& vec1)
 {
 	SplitVec vec;
@@ -528,122 +535,124 @@ unsigned int Hash(string word)
 	}
 	if ((word[0] == 'a') || (word[0] = 'A'))
 	{
-		h = ((1 * word[0]) + (3 * word[1]) + (5 * word[2]) + (7 * word[3]) + (11 * word[4]) + (13 * word[5]));
+		h = ((1 * word[0]) + (3 * word[1]) + (5 * word[2]) + (7 * word[3]) + (11 * word[4]) + (13 * word[5])) * 3;
 	}
 	else if ((word[0] == 'b') || (word[0] = 'B'))
 	{
-		h = ((17 * word[0]) + (19 * word[1]) + (23 * word[2]) + (29 * word[3]) + (31 * word[4]) + (37 * word[5]));
+		h = ((17 * word[0]) + (19 * word[1]) + (23 * word[2]) + (29 * word[3]) + (31 * word[4]) + (37 * word[5])) * 5;
 	}
 	else if ((word[0] == 'c') || (word[0] = 'C'))
 	{
-		h = ((41 * word[0]) + (43 * word[1]) + (47 * word[2]) + (53 * word[3]) + (59 * word[4]) + (61 * word[5]));
+		h = ((41 * word[0]) + (43 * word[1]) + (47 * word[2]) + (53 * word[3]) + (59 * word[4]) + (61 * word[5])) * 7;
 	}
 	else if ((word[0] == 'd') || (word[0] = 'D'))
 	{
-		h = ((67 * word[0]) + (71 * word[1]) + (73 * word[2]) + (79 * word[3]) + (83 * word[4]) + (89 * word[5]));
+		h = ((67 * word[0]) + (71 * word[1]) + (73 * word[2]) + (79 * word[3]) + (83 * word[4]) + (89 * word[5])) * 11;
 	}
 	else if ((word[0] == 'e') || (word[0] = 'E'))
 	{
-		h = ((97 * word[0]) + (101 * word[1]) + (103 * word[2]) + (107 * word[3]) + (109 * word[4]) + (113 * word[5]));
+		h = ((97 * word[0]) + (101 * word[1]) + (103 * word[2]) + (107 * word[3]) + (109 * word[4]) + (113 * word[5])) * 13;
 	}
 	else if ((word[0] == 'f') || (word[0] = 'F'))
 	{
-		h = ((127 * word[0]) + (131 * word[1]) + (137 * word[2]) + (139 * word[3]) + (149 * word[4]) + (151 * word[5]));
+		h = ((127 * word[0]) + (131 * word[1]) + (137 * word[2]) + (139 * word[3]) + (149 * word[4]) + (151 * word[5])) * 17;
 	}
 	else if ((word[0] == 'g') || (word[0] = 'G'))
 	{
-		h = ((151 * word[0]) + (113 * word[1]) + (89 * word[2]) + (61 * word[3]) + (37 * word[4]) + (13 * word[5]));
+		h = ((151 * word[0]) + (113 * word[1]) + (89 * word[2]) + (61 * word[3]) + (37 * word[4]) + (13 * word[5])) * 19;
 	}
 	else if ((word[0] == 'h') || (word[0] = 'H'))
 	{
-		h = ((149 * word[0]) + (109 * word[1]) + (83 * word[2]) + (59 * word[3]) + (31 * word[4]) + (11 * word[5]));
+		h = ((149 * word[0]) + (109 * word[1]) + (83 * word[2]) + (59 * word[3]) + (31 * word[4]) + (11 * word[5])) * 23;
 	}
 	else if ((word[0] == 'i') || (word[0] = 'I'))
 	{
-		h = ((139 * word[0]) + (107 * word[1]) + (79 * word[2]) + (53 * word[3]) + (29 * word[4]) + (7 * word[5]));
+		h = ((139 * word[0]) + (107 * word[1]) + (79 * word[2]) + (53 * word[3]) + (29 * word[4]) + (7 * word[5])) * 29;
 	}
 	else if ((word[0] == 'j') || (word[0] = 'J'))
 	{
-		h = ((137 * word[0]) + (103 * word[1]) + (73 * word[2]) + (47 * word[3]) + (23 * word[4]) + (5 * word[5]));
+		h = ((137 * word[0]) + (103 * word[1]) + (73 * word[2]) + (47 * word[3]) + (23 * word[4]) + (5 * word[5])) * 31;
 	}
 	else if ((word[0] == 'k') || (word[0] = 'K'))
 	{
-		h = ((131 * word[0]) + (101 * word[1]) + (71 * word[2]) + (43 * word[3]) + (19 * word[4]) + (3 * word[5]));
+		h = ((131 * word[0]) + (101 * word[1]) + (71 * word[2]) + (43 * word[3]) + (19 * word[4]) + (3 * word[5])) * 37;
 	}
 	else if ((word[0] == 'l') || (word[0] = 'L'))
 	{
-		h = ((127 * word[0]) + (97 * word[1]) + (67 * word[2]) + (41 * word[3]) + (17 * word[4]) + (1 * word[5]));
+		h = ((127 * word[0]) + (97 * word[1]) + (67 * word[2]) + (41 * word[3]) + (17 * word[4]) + (1 * word[5])) * 41;
 	}
 	else if ((word[0] == 'm') || (word[0] = 'M'))
 	{
-		h = ((1 * word[5]) + (3 * word[4]) + (5 * word[3]) + (7 * word[2]) + (11 * word[1]) + (13 * word[0]));
+		h = ((1 * word[1]) + (3 * word[4]) + (5 * word[3]) + (7 * word[5]) + (11 * word[2]) + (13 * word[0])) * 43;
 	}
 	else if ((word[0] == 'n') || (word[0] = 'N'))
 	{
-		h = ((17 * word[5]) + (19 * word[4]) + (23 * word[3]) + (29 * word[2]) + (31 * word[1]) + (37 * word[0]));
+		h = ((17 * word[1]) + (19 * word[4]) + (23 * word[3]) + (29 * word[5]) + (31 * word[2]) + (37 * word[0])) * 47;
 	}
 	else if ((word[0] == 'o') || (word[0] = 'O'))
 	{
-		h = ((41 * word[5]) + (43 * word[4]) + (47 * word[3]) + (53 * word[2]) + (59 * word[1]) + (61 * word[0]));
+		h = ((41 * word[1]) + (43 * word[4]) + (47 * word[3]) + (53 * word[5]) + (59 * word[2]) + (61 * word[0])) * 53;
 	}
 	else if ((word[0] == 'p') || (word[0] = 'P'))
 	{
-		h = ((67 * word[5]) + (71 * word[4]) + (73 * word[3]) + (79 * word[2]) + (83 * word[1]) + (89 * word[0]));
+		h = ((67 * word[1]) + (71 * word[4]) + (73 * word[3]) + (79 * word[5]) + (83 * word[2]) + (89 * word[0])) * 59;
 	}
 	else if ((word[0] == 'q') || (word[0] = 'Q'))
 	{
-		h = ((97 * word[5]) + (101 * word[4]) + (103 * word[3]) + (107 * word[2]) + (109 * word[1]) + (113 * word[0]));
+		h = ((97 * word[1]) + (101 * word[4]) + (103 * word[3]) + (107 * word[5]) + (109 * word[2]) + (113 * word[0])) * 61;
 	}
 	else if ((word[0] == 'r') || (word[0] = 'R'))
 	{
-		h = ((127 * word[5]) + (131 * word[4]) + (137 * word[3]) + (139 * word[2]) + (149 * word[1]) + (151 * word[0]));
+		h = ((127 * word[1]) + (131 * word[4]) + (137 * word[3]) + (139 * word[5]) + (149 * word[2]) + (151 * word[0])) * 67;
 	}
 	else if ((word[0] == 's') || (word[0] = 'S'))
 	{
-		h = ((151 * word[5]) + (113 * word[4]) + (89 * word[3]) + (61 * word[2]) + (37 * word[1]) + (13 * word[0]));
+		h = ((151 * word[1]) + (113 * word[4]) + (89 * word[3]) + (61 * word[5]) + (37 * word[2]) + (13 * word[0])) * 71;
 	}
 	else if ((word[0] == 't') || (word[0] = 'T'))
 	{
-		h = ((149 * word[5]) + (109 * word[4]) + (83 * word[3]) + (59 * word[2]) + (31 * word[1]) + (11 * word[0]));
+		h = ((149 * word[1]) + (109 * word[4]) + (83 * word[3]) + (59 * word[5]) + (31 * word[2]) + (11 * word[0])) * 73;
 	}
 	else if ((word[0] == 'u') || (word[0] = 'U'))
 	{
-		h = ((139 * word[5]) + (107 * word[4]) + (79 * word[3]) + (53 * word[2]) + (29 * word[1]) + (7 * word[0]));
+		h = ((139 * word[1]) + (107 * word[4]) + (79 * word[3]) + (53 * word[5]) + (29 * word[2]) + (7 * word[0])) * 79;
 	}
 	else if ((word[0] == 'v') || (word[0] = 'V'))
 	{
-		h = ((137 * word[5]) + (103 * word[4]) + (73 * word[3]) + (47 * word[2]) + (23 * word[1]) + (5 * word[0]));
+		h = ((137 * word[1]) + (103 * word[4]) + (73 * word[3]) + (47 * word[5]) + (23 * word[2]) + (5 * word[0])) * 83;
 	}
 	else if ((word[0] == 'w') || (word[0] = 'W'))
 	{
-		h = ((131 * word[5]) + (101 * word[4]) + (71 * word[3]) + (43 * word[2]) + (19 * word[1]) + (3 * word[0]));
+		h = ((131 * word[1]) + (101 * word[4]) + (71 * word[3]) + (43 * word[5]) + (19 * word[2]) + (3 * word[0])) * 89;
 	}
 	else if ((word[0] == 'x') || (word[0] = 'X'))
 	{
-		h = ((127 * word[5]) + (97 * word[4]) + (67 * word[3]) + (41 * word[2]) + (17 * word[1]) + (1 * word[0]));
+		h = ((127 * word[1]) + (97 * word[4]) + (67 * word[3]) + (41 * word[5]) + (17 * word[2]) + (1 * word[0])) * 97;
 	}
 	else if ((word[0] == 'y') || (word[0] = 'Y'))
 	{
-		h = ((157 * word[5]) + (163 * word[4]) + (167 * word[3]) + (173 * word[2]) + (179 * word[1]) + (181 * word[0]));
+		h = ((157 * word[1]) + (163 * word[4]) + (167 * word[3]) + (173 * word[5]) + (179 * word[2]) + (181 * word[0])) * 101;
 	}
 	else if ((word[0] == 'z') || (word[0] = 'Z'))
 	{
-		h = ((191 * word[5]) + (193 * word[4]) + (197 * word[3]) + (199 * word[2]) + (211 * word[1]) + (223 * word[0]));
+		h = ((191 * word[1]) + (193 * word[4]) + (197 * word[3]) + (199 * word[5]) + (211 * word[2]) + (223 * word[0])) * 103;
 	}
 
 	return h;
 }
 
+// A structure to hold the elements being stored in the HashTable
 struct chainBucket {
 	bool collision;
 	unsigned int Hash;
 	List* bucketList = new List;
 };
 
+// The HashTable class
 class HashTable {
 private:
 
-	chainBucket Table[79];
+	chainBucket Table[203];
 
 public:
 
@@ -653,9 +662,12 @@ public:
 	void printTable();
 };
 
+// A function to add elements to the hashTable
+// This is the function that the user actually calls
+// both to hash and to add a hash to the table
 void HashTable::addToTable(string text)
 {
-	unsigned int hash = Hash(text), key = Hash(text) % 79;
+	unsigned int hash = Hash(text), key = Hash(text) % 203;
 
 	if (hash == 0)
 	{
@@ -680,12 +692,11 @@ void HashTable::addToTable(string text)
 
 
 // Help from lab 10 HashMaps
-
 void HashTable::printTable()
 {
 	cout << "\nKey:[HASHVAL] Bucket:[<COLLISION?>]\n";
 	cout << ">>  LinkedList  \n\n";
-
+	int i = 0;
 	for (const auto& n : Table) 
 	{
 		List* chain = new List;
@@ -698,8 +709,13 @@ void HashTable::printTable()
 			{
 				chain->print();
 			}
+			else
+			{
+				i++;
+			}
 				cout << "\n";
 		}
 
 	}
+	cout << "There were : " << i << " : different hash values" << endl;
 }
