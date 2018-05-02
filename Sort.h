@@ -5,6 +5,7 @@
 #include "LinkedList.h" // From Lab2
 using std::cout;
 using std::endl;
+using std::cin;
 
 using std::vector;
 using std::iterator;
@@ -73,7 +74,7 @@ int size(string text)
 	return size;
 }
 
-// QuickSort
+// QuickSort, help from GeeksforGeeks.com
 // The function that actually does the sorting
 int Partition(vector<int>& vec1, int low, int high)
 {
@@ -112,7 +113,6 @@ vector<int> QuickSort(vector<int>& vec1)
 }
 
 // Binary Search
-
 bool BinarySearch(vector<int> vec1, int data)
 {
 	int length = size(vec1);
@@ -157,10 +157,10 @@ bool BinarySearch(vector<int> vec1, int data)
 		{
 			vector<int> vec3;
 
-				for (int i = (length / 2); i < length - 1; i++)
-				{
-					vec3.push_back(vec1[i]);
-				}
+			for (int i = (length / 2); i < length - 1; i++)
+			{
+				vec3.push_back(vec1[i]);
+			}
 
 			return BinarySearch(vec3, data);
 		}
@@ -192,15 +192,15 @@ bool BinarySearch(vector<int> vec1, int data)
 		{
 			vector<int> vec3;
 
-				for (int i = high; i < length; i++)
-				{
-					vec3.push_back(vec1[i]);
-				}
+			for (int i = high; i < length; i++)
+			{
+				vec3.push_back(vec1[i]);
+			}
 
-				return BinarySearch(vec3, data);
+			return BinarySearch(vec3, data);
 		}
 	}
-	
+
 }
 
 // Merge Sort
@@ -378,7 +378,7 @@ vector<int> Merge(SplitVec& vec)
 						L = len3;
 						break;
 					}
-						k++;
+					k++;
 				}
 				if (L != len3)
 				{
@@ -652,7 +652,7 @@ struct chainBucket {
 class HashTable {
 private:
 
-	chainBucket Table[203];
+	chainBucket Table[157];
 
 public:
 
@@ -667,7 +667,7 @@ public:
 // both to hash and to add a hash to the table
 void HashTable::addToTable(string text)
 {
-	unsigned int hash = Hash(text), key = Hash(text) % 203;
+	unsigned int hash = Hash(text), key = Hash(text) % 157;
 
 	if (hash == 0)
 	{
@@ -697,7 +697,7 @@ void HashTable::printTable()
 	cout << "\nKey:[HASHVAL] Bucket:[<COLLISION?>]\n";
 	cout << ">>  LinkedList  \n\n";
 	int i = 0;
-	for (const auto& n : Table) 
+	for (const auto& n : Table)
 	{
 		List* chain = new List;
 		chain = n.bucketList;
@@ -713,9 +713,103 @@ void HashTable::printTable()
 			{
 				i++;
 			}
-				cout << "\n";
+			cout << "\n";
 		}
 
 	}
 	cout << "There were : " << i << " : different hash values" << endl;
+}
+
+// Bloom Filter
+void BloomFilter(string text)
+{
+	std::hash<string> str_hash;
+	std::hash<unsigned int> int_hash;
+	string word = text;
+	int collection[1000] = {0};
+	bool present = true;
+//	cout << "Enter a word to filter for: ";
+//	cin >> word;
+//	unsigned long int num1, num2, num3, num4, num5, num6, num7, num8, num9;
+
+	for (int i = 0; i < 7; i++)
+	{
+		collection[(str_hash(word) + (i * int_hash(str_hash(word)))) % 1000] = 1;
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		if (collection[(str_hash(word) + (i * int_hash(str_hash(word)))) % 1000] != 1)
+		{
+			cout << "the word is not in the list" << endl;
+			present = false;
+		}
+	}
+	if (present)
+	{
+		cout << "the word " << word << " is likely in the list" << endl;
+	}
+
+
+/*
+	num1 = str_hash(word) % 1000;
+	num2 = int_hash(str_hash(word)) % 1000;
+	num3 = int_hash(int_hash(str_hash(word))) % 1000;
+	num4 = int_hash(int_hash(int_hash(str_hash(word)))) % 1000;
+	num5 = int_hash(int_hash(int_hash(int_hash(str_hash(word))))) % 1000;
+	num6 = int_hash(int_hash(int_hash(int_hash(int_hash(str_hash(word)))))) % 1000;
+	num7 = int_hash(int_hash(int_hash(int_hash(int_hash(int_hash(str_hash(word))))))) % 1000;
+	num8 = int_hash(int_hash(int_hash(int_hash(int_hash(int_hash(int_hash(str_hash(word)))))))) % 1000;
+	num9 = Hash(word) % 1000;
+
+	collection[num1] = 1;
+	collection[num2] = 1;
+	collection[num3] = 1;
+	collection[num4] = 1;
+	collection[num5] = 1;
+	collection[num6] = 1;
+	collection[num7] = 1;
+	collection[num8] = 1;
+	collection[num9] = 1;
+
+	if (collection[num1] != 1)
+	{
+		cout << "The word " << word << " is most likely not in this list" << endl;
+	}
+	else if (collection[num2] != 1)
+	{
+		cout << "The word " << word << " is most likely not in this list" << endl;
+	}
+	else if (collection[num3] != 1)
+	{
+		cout << "The word " << word << " is most likely not in this list" << endl;
+	}
+	else if (collection[num4] != 1)
+	{
+		cout << "The word " << word << " is most likely not in this list" << endl;
+	}
+	else if (collection[num5] != 1)
+	{
+		cout << "The word " << word << " is most likely not in this list" << endl;
+	}
+	else if (collection[num6] != 1)
+	{
+		cout << "The word " << word << " is most likely not in this list" << endl;
+	}
+	else if (collection[num7] != 1)
+	{
+		cout << "The word " << word << " is most likely not in this list" << endl;
+	}
+	else if (collection[num8] != 1)
+	{
+		cout << "The word " << word << " is most likely not in this list" << endl;
+	}
+	else if (collection[num9] != 1)
+	{
+		cout << "The word " << word << " is most likely not in this list" << endl;
+	}
+	else
+	{
+		cout << "The word " << word << " is likely to be in this list" << endl;
+	}
+	*/
 }
