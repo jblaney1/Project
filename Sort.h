@@ -721,26 +721,29 @@ void HashTable::printTable()
 }
 
 // Bloom Filter
-void BloomFilter(string text)
+// n = 10000 elements
+// m = 1000 "bits"
+// k = (n/m)ln2 = 6.9 = 7 hash functions
+
+int* BloomFilter(string text, int * collection, bool insert = false)
 {
 	std::hash<string> str_hash;
 	std::hash<unsigned int> int_hash;
 	string word = text;
-	int collection[1000] = {0};
 	bool present = true;
-//	cout << "Enter a word to filter for: ";
-//	cin >> word;
-//	unsigned long int num1, num2, num3, num4, num5, num6, num7, num8, num9;
 
-	for (int i = 0; i < 7; i++)
+	if (insert == true)
 	{
-		collection[(str_hash(word) + (i * int_hash(str_hash(word)))) % 1000] = 1;
+		for (int i = 0; i < 7; i++)
+		{
+			collection[(str_hash(word) + (i * int_hash(str_hash(word)))) % 1000] = 1;
+		}
 	}
+
 	for (int i = 0; i < 7; i++)
 	{
 		if (collection[(str_hash(word) + (i * int_hash(str_hash(word)))) % 1000] != 1)
 		{
-			cout << "the word is not in the list" << endl;
 			present = false;
 		}
 	}
@@ -748,68 +751,10 @@ void BloomFilter(string text)
 	{
 		cout << "the word " << word << " is likely in the list" << endl;
 	}
-
-
-/*
-	num1 = str_hash(word) % 1000;
-	num2 = int_hash(str_hash(word)) % 1000;
-	num3 = int_hash(int_hash(str_hash(word))) % 1000;
-	num4 = int_hash(int_hash(int_hash(str_hash(word)))) % 1000;
-	num5 = int_hash(int_hash(int_hash(int_hash(str_hash(word))))) % 1000;
-	num6 = int_hash(int_hash(int_hash(int_hash(int_hash(str_hash(word)))))) % 1000;
-	num7 = int_hash(int_hash(int_hash(int_hash(int_hash(int_hash(str_hash(word))))))) % 1000;
-	num8 = int_hash(int_hash(int_hash(int_hash(int_hash(int_hash(int_hash(str_hash(word)))))))) % 1000;
-	num9 = Hash(word) % 1000;
-
-	collection[num1] = 1;
-	collection[num2] = 1;
-	collection[num3] = 1;
-	collection[num4] = 1;
-	collection[num5] = 1;
-	collection[num6] = 1;
-	collection[num7] = 1;
-	collection[num8] = 1;
-	collection[num9] = 1;
-
-	if (collection[num1] != 1)
-	{
-		cout << "The word " << word << " is most likely not in this list" << endl;
-	}
-	else if (collection[num2] != 1)
-	{
-		cout << "The word " << word << " is most likely not in this list" << endl;
-	}
-	else if (collection[num3] != 1)
-	{
-		cout << "The word " << word << " is most likely not in this list" << endl;
-	}
-	else if (collection[num4] != 1)
-	{
-		cout << "The word " << word << " is most likely not in this list" << endl;
-	}
-	else if (collection[num5] != 1)
-	{
-		cout << "The word " << word << " is most likely not in this list" << endl;
-	}
-	else if (collection[num6] != 1)
-	{
-		cout << "The word " << word << " is most likely not in this list" << endl;
-	}
-	else if (collection[num7] != 1)
-	{
-		cout << "The word " << word << " is most likely not in this list" << endl;
-	}
-	else if (collection[num8] != 1)
-	{
-		cout << "The word " << word << " is most likely not in this list" << endl;
-	}
-	else if (collection[num9] != 1)
-	{
-		cout << "The word " << word << " is most likely not in this list" << endl;
-	}
 	else
 	{
-		cout << "The word " << word << " is likely to be in this list" << endl;
+		cout << "the word is not in the list" << endl;
 	}
-	*/
+
+	return collection;
 }
