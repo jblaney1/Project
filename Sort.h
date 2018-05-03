@@ -116,10 +116,26 @@ vector<int> QuickSort(vector<int>& vec1)
 bool BinarySearch(vector<int> vec1, int data)
 {
 	int length = size(vec1);
+	QuickSort(vec1);
 
 	if (length == 0)
 	{
 		return false;
+	}
+	else if (length == 1)
+	{
+		if (vec1[0] == data)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (vec1[length - 1] == data)
+	{
+		return true;
 	}
 	else if (length == 2)
 	{
@@ -136,7 +152,7 @@ bool BinarySearch(vector<int> vec1, int data)
 			return false;
 		}
 	}
-	else if ((length % 2) == 1)
+	else
 	{
 		if (vec1[length / 2] == data)
 		{
@@ -157,7 +173,7 @@ bool BinarySearch(vector<int> vec1, int data)
 		{
 			vector<int> vec3;
 
-			for (int i = (length / 2); i < length - 1; i++)
+			for (int i = (length / 2); i < length; i++)
 			{
 				vec3.push_back(vec1[i]);
 			}
@@ -165,42 +181,6 @@ bool BinarySearch(vector<int> vec1, int data)
 			return BinarySearch(vec3, data);
 		}
 	}
-	else
-	{
-		int low = length / 2, high = (length / 2) + 1;
-
-		if (vec1[low] == data)
-		{
-			return true;
-		}
-		else if (vec1[high] == data)
-		{
-			return true;
-		}
-		else if (data < vec1[low])
-		{
-			vector<int> vec2;
-
-			for (int i = 0; i < low; i++)
-			{
-				vec2.push_back(vec1[i]);
-			}
-
-			return BinarySearch(vec2, data);
-		}
-		else
-		{
-			vector<int> vec3;
-
-			for (int i = high; i < length; i++)
-			{
-				vec3.push_back(vec1[i]);
-			}
-
-			return BinarySearch(vec3, data);
-		}
-	}
-
 }
 
 // Merge Sort
@@ -656,24 +636,24 @@ private:
 
 public:
 
-	unsigned int collisions;
+	unsigned int collisions = 0;
 
-	void addToTable(string text);
+	bool addToTable(string text);
 	void printTable();
 };
 
 // A function to add elements to the hashTable
 // This is the function that the user actually calls
 // both to hash and to add a hash to the table
-void HashTable::addToTable(string text)
+bool HashTable::addToTable(string text)
 {
 	unsigned int hash = Hash(text), key = Hash(text) % 157;
 
 	if (hash == 0)
 	{
-		return;
+		return false;
 	}
-	if (Table[key].Hash != hash)
+	else if (Table[key].Hash != hash)
 	{
 		chainBucket bucket;
 		bucket.collision = false;
@@ -688,6 +668,7 @@ void HashTable::addToTable(string text)
 		Table[key].bucketList->insertAsLast(text);
 		collisions++;
 	}
+	return true;
 }
 
 
@@ -717,15 +698,22 @@ void HashTable::printTable()
 		}
 
 	}
-	cout << "There were : " << i << " : different hash values" << endl;
+	cout << "There were : " << i << " : different hash values and " << collisions << " collisions" << endl;
 }
 
 // Bloom Filter
 // n = 10000 elements
 // m = 1000 "bits"
 // k = (n/m)ln2 = 6.9 = 7 hash functions
+class BloomFilter
+{
+private:
+	int collection[1000];
 
-int* BloomFilter(string text, int * collection, bool insert = false)
+public:
+	BloomFilter(string x, bool y);
+};
+BloomFilter::BloomFilter(string text, bool insert = false)
 {
 	std::hash<string> str_hash;
 	std::hash<unsigned int> int_hash;
@@ -745,16 +733,21 @@ int* BloomFilter(string text, int * collection, bool insert = false)
 		if (collection[(str_hash(word) + (i * int_hash(str_hash(word)))) % 1000] != 1)
 		{
 			present = false;
+			break;
 		}
 	}
-	if (present)
+
+	if (insert != true)
 	{
-		cout << "the word " << word << " is likely in the list" << endl;
+		if (present)
+		{
+			cout << "the word " << word << " is likely in the list" << endl;
+		}
 	}
-	else
+	if(!present)
 	{
 		cout << "the word is not in the list" << endl;
 	}
 
-	return collection;
+	return;
 }
