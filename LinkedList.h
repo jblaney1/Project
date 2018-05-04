@@ -112,6 +112,8 @@ public:
 	//         from this List and has been returned.
 	string removeFirst();
 
+	bool find(string text);
+
 private:
 	//*** Inaccessible standard functions ***
 
@@ -202,6 +204,20 @@ string List::removeFirst()
 	first_ = first_->next_;
 	delete tempPtr;
 	return item;
+}
+
+bool List::find(string text)
+{
+	Node * tempPtr = first_;
+	while (tempPtr != NULL)
+	{
+		if (tempPtr->entry_ == text)
+		{
+			return true;
+		}
+		tempPtr = tempPtr->next_;
+	}
+	return false;
 }
 
 

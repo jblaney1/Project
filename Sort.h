@@ -510,7 +510,7 @@ unsigned int Hash(string word)
 
 	if (length < 6)
 	{
-		cout << "The min string length is 6, please enter a longer string" << endl;
+		//cout << "The min string length is 6, please enter a longer string" << endl;
 		return 0;
 	}
 	if ((word[0] == 'a') || (word[0] = 'A'))
@@ -638,20 +638,21 @@ public:
 
 	unsigned int collisions = 0;
 
-	bool addToTable(string text);
+	void addToTable(string text);
+	bool find(string text);
 	void printTable();
 };
 
 // A function to add elements to the hashTable
 // This is the function that the user actually calls
 // both to hash and to add a hash to the table
-bool HashTable::addToTable(string text)
+void HashTable::addToTable(string text)
 {
 	unsigned int hash = Hash(text), key = Hash(text) % 157;
 
 	if (hash == 0)
 	{
-		return false;
+		return;
 	}
 	else if (Table[key].Hash != hash)
 	{
@@ -668,7 +669,23 @@ bool HashTable::addToTable(string text)
 		Table[key].bucketList->insertAsLast(text);
 		collisions++;
 	}
-	return true;
+}
+
+bool HashTable::find(string text)
+{
+	bool found = false;
+	unsigned int key = Hash(text) % 157;
+
+	if (key == 0)
+	{
+		return false;
+	}
+	else
+	{
+		found = Table[key].bucketList->find(text);
+	}
+
+	return found;
 }
 
 
